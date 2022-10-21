@@ -15,6 +15,18 @@
   hardware.video.hidpi.enable = true;
   services.xserver.libinput.enable = true;
 
+  boot.initrd.availableKernelModules = [
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "9p"
+    "9pnet_virtio"
+  ];
+  boot.initrd.kernelModules =
+    [ "virtio_balloon" "virtio_console" "virtio_rng" ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -34,9 +46,7 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   environment.systemPackages = with pkgs; [ vim ];
-  environment.variables = {
-    EDITOR = "vim";
-  };
+  environment.variables = { EDITOR = "vim"; };
 
   services.openssh = {
     enable = true;
