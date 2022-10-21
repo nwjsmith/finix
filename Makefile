@@ -1,6 +1,6 @@
 SSH_OPTIONS=-o PubkeyAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 
-.PHONY = bootstrap copy configure
+.PHONY = bootstrap copy configure test switch
 
 bootstrap:
 	ssh $(SSH_OPTIONS) root@dev " \
@@ -38,3 +38,9 @@ copy:
 
 configure: copy
 	ssh $(SSH_OPTIONS) root@dev 'nixos-rebuild switch --flake "/nix-config#dev"; reboot'
+
+test:
+	nixos-rebuild test --flake ".#dev"
+
+switch:
+	nixos-rebuild switch --flake ".#dev"

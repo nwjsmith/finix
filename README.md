@@ -1,7 +1,7 @@
 # Finix
 
-Finicking with NixOS. Probably only useful to me. If you find this useful we
-should be friends.
+Finicking with a NixOS VM as replacement for my development environment.
+Probably only useful to me. If you find this useful we should be friends.
 
 ## Usage
 
@@ -14,3 +14,5 @@ should be friends.
    installation.
 5. Once rebooted, run `make configure` from your Mac to get the VM set up with
    my personal configuration.
+6. Clone this repository into the VM and tweak away. Give your changes a try
+   with `make test`, finalize with `make switch`.
