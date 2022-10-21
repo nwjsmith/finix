@@ -1,16 +1,17 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = "experimental-features = nix-command flakes";
   };
-
   nixpkgs.config.allowUnfree = true;
-
-  imports = [ ./hardware-configuration.nix ];
 
   hardware.parallels.enable = true;
   hardware.video.hidpi.enable = true;
@@ -19,7 +20,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Parallels both only support this being 0 otherwise you see "error switching
+  # Parallels only supports this being 0 otherwise you see "error switching
   # console mode" on boot
   boot.loader.systemd-boot.consoleMode = "0";
 
