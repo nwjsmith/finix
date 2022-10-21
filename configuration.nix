@@ -58,6 +58,27 @@
     ];
   };
 
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    dpi = 192;
+
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 40;
+
+    desktopManager = {
+      xterm.enable = false;
+      wallpaper.mode = "scale";
+    };
+
+    displayManager = {
+      defaultSession = "none+i3";
+      lightdm.enable = true;
+    };
+
+    windowManager.i3.enable = true;
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
