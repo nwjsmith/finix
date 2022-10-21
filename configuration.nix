@@ -33,7 +33,10 @@
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  environment.systemPackages = [ ];
+  environment.systemPackages = with pkgs; [ vim ];
+  environment.variables = {
+    EDITOR = "vim";
+  };
 
   services.openssh = {
     enable = true;
