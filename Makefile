@@ -40,7 +40,7 @@ configure: copy
 	ssh $(SSH_OPTIONS) root@dev 'nixos-rebuild switch --flake "/nix-config#dev"; reboot'
 
 test:
-	nixos-rebuild test --flake ".#dev"
+	sudo nixos-rebuild test --flake ".#dev"
 
 switch:
-	nixos-rebuild switch --flake ".#dev"
+	sudo nixos-rebuild switch --flake ".#dev"
