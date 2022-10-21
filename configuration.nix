@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -36,7 +34,6 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   environment.systemPackages = [ ];
-  virtualization.docker.enable = true;
 
   services.openssh = {
     enable = true;
@@ -47,6 +44,16 @@
   security.sudo.wheelNeedsPassword = false;
   users.mutableUsers = false;
   users.users.root.initialPassword = "root";
+  users.users.nwjsmith = {
+    isNormalUser = true;
+    home = "/home/nwjsmith";
+    extraGroups = [ "docker" "wheel" ];
+    hashedPassword =
+      "$6$PUhJVThTRYeN3KJP$Bz6iTc4rbVAQmFGCX9ou15JXqG8IlEpVTjyEMRPhn3ALJ6uIPzgCj7.RY3L1fC3ZZwM97UTUYzER/vSiAzUm6.";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtWR1nXAvSmsd92TC9rMuZIh1Ec8cqxYr3BIyUxdNyy"
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

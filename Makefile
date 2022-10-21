@@ -1,10 +1,9 @@
-NIXADDR ?= finix
-NIXUSER ?= nwjsmith
-
 SSH_OPTIONS=-o PubkeyAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 
+.PHONY = bootstrap copy configure
+
 bootstrap:
-	ssh $(SSH_OPTIONS) root@$(NIXADDR) " \
+	ssh $(SSH_OPTIONS) root@dev " \
 		parted /dev/sda -- mklabel gpt; \
 		parted /dev/sda -- mkpart primary 512MiB -8GiB; \
 		parted /dev/sda -- mkpart primary linux-swap -8GiB 100\%; \
@@ -28,3 +27,14 @@ bootstrap:
 		nixos-install --no-root-passwd; \
 		reboot; \
 	"
+
+copy:
+	rsync \
+		--archive \
+		--verbose \
+		--rsh='ssh $(SSH_OPTIONS)' \
+		--exclude='.git/' \
+		. root@dev:/nix-config
+
+configure: copy
+	ssh $(SSH_OPTIONS) root@dev 'nixos-rebuild switch --flake "/nix-config#dev"; reboot'
